@@ -2,9 +2,9 @@ set -e
 
 echo "Setting up and Running Container..."
 ls -la
-docker build -f ./amd64_Dockerfile .
-# docker run --name test-container $FROM ./release.sh
+docker build -f ./amd64_Dockerfile -t amd64_ros_container .
+docker run -dp 3000:3000 amd64_ros_container
 # # docker cp test-container:/usr/src/my-workdir/my-outputs .
-# docker rm test-container
+docker rm amd64_ros_container
 
 echo "Container Completed Functions"
