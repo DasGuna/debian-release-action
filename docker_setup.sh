@@ -6,6 +6,8 @@ echo "Setting up and Running Container..."
 echo "Path and Contents at this point"
 pwd
 ls -la
+echo "path of home directory"
+ls ~
 echo "Make a mount point for files"
 mkdir targets
 echo "Running Docker Container for Release..."
