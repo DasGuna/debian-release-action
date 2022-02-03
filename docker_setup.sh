@@ -43,5 +43,4 @@ echo "Path and Contents at this point"
 pwd
 ls -la
 echo "Files in mount point"
-cd targets
-ls -la
+ls -la $mount_point_path
