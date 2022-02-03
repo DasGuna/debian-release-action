@@ -25,6 +25,11 @@ then
     echo "ARM 64 RELEASE Confirmed"
     docker build -f ./arm64_Dockerfile -t arm64_ros_container:latest .
     docker run -v $mount_point_path:/test_targets arm64_ros_container:latest
+elif [[ $INPUT_ARCH == 'arm32' ]]
+then 
+    echo "ARM 32 RELEASE Confirmed"
+    docker build -f ./arm32_Dockerfile -t arm32_ros_container:latest .
+    docker run -v $mount_point_path:/test_targets arm32_ros_container:latest
 else
     echo "UNKNOWN ARCH"
     exit -1

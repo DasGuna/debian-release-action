@@ -9,8 +9,9 @@ jobs:
     strategy:
       matrix:
         include:
-          - arch: 'arm64'
           - arch: 'amd64'
+          - arch: 'arm64'
+          - arch: 'arm32'
     name: Self Test of Action
     steps:
       - uses: actions/checkout@v2
@@ -22,3 +23,6 @@ jobs:
           architecture: ${{ matrix.arch }}
       - run: echo random-number ${{ steps.test.outputs.random-number }}
         shell: bash
+      # Use output from action 
+      - name: Get Action Output
+        run: echo "created files: ${{ steps.test.outputs.debian-files }}"
