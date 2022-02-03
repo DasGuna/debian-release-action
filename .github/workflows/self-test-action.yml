@@ -21,5 +21,3 @@ jobs:
         uses: DasGuna/test-release-composite-action@main
         with:
           architecture: ${{ matrix.arch }}
-      - run: echo random-number ${{ steps.test.outputs.random-number }}
-        shell: bash
