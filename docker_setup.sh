@@ -17,6 +17,9 @@ mkdir package
 mount_point_path=$(realpath package/)
 touch $mount_point_path/this_is_a_test.txt
 
+echo "Copy the action entrypoint into the mounted folder"
+cp $ACTION_PATH/release.sh $mount_point_path/release.sh
+
 echo "Running Docker Container for Release..."
 if [[ $INPUT_ARCH == 'amd64' ]]
 then

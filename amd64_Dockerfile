@@ -2,8 +2,8 @@
 FROM amd64/ros:noetic
 
 # Copies your code file from your action repo into the filesystem path '/' of the container
-ARG action_path
-COPY $action_path/release.sh /release.sh
+# ARG action_path
+# COPY $action_path/release.sh /release.sh
 
 # Code file to execute when the docker container starts up (`entrypoint.sh`)
-ENTRYPOINT ["/release.sh"]
+ENTRYPOINT ["/package_path/release.sh"]
