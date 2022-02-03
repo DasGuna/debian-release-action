@@ -3,7 +3,7 @@
 echo "Running Release Pipeline..."
 echo "Getting Required Libraries..."
 apt-get -y update 
-apt-get install -y python3-pip python3-dev python3-bloom python3-stdeb dh-make git wget fakeroot
+apt-get install -y python3-pip python3-dev python3-bloom python3-stdeb dh-make git wget fakeroot cmake
 ln -s /usr/bin/python3 /usr/local/bin/python
 
 echo "Checking current directory path"
