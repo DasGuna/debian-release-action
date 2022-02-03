@@ -12,12 +12,14 @@ inputs:
 outputs:
   debian-files:
     description: "Array of Debian Files"
+    value: ${{ steps.docker_main.outputs.files }}
 runs:
   using: "composite"
   steps:
     - run: echo "${{ github.action_path }}" >> $GITHUB_PATH
       shell: bash
-    - run: docker_setup.sh
+    - id: docker_main
+      run: docker_setup.sh
       shell: bash
       env:
         ACTION_PATH: ${{ github.action_path }}

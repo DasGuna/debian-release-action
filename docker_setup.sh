@@ -65,5 +65,5 @@ for f in "${file_arr[@]}"; do
     fi
     ((counter=counter+1))
 done
-echo "list: $list"
-echo "::set-output name=debian-files::[$list]"
+echo "list: [$list]"
+echo "::set-output name=files::[$list]"
