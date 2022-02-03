@@ -1,0 +1,29 @@
+name: 'Multi-Architecture Release Action'
+description: 'Creates a Debian from a selected architecture'
+inputs:
+  ros-distro: #id of distro input
+    description: 'ROS distro to use'
+    required: false
+    default: 'noetic'
+  architecture: #id of architecture
+    description: 'Image architecture to use'
+    required: true
+    default: 'arm64v8'
+outputs:
+  random-number:
+    description: "Random Number [TEST]"
+    value: ${{ steps.random-number-generator.outputs.random-id }}
+  debian-files:
+    description: "Array of Debian Files"
+runs:
+  using: "composite"
+  steps:
+    - run: echo Hello World
+      shell: bash
+    - id: random-number-generator
+      run: echo "::set-output name=random-id::$(echo $RANDOM)"
+      shell: bash
+    - run: echo "${{ github.action_path }}" >> $GITHUB_PATH
+      shell: bash
+    - run: release.sh
+      shell: bash
