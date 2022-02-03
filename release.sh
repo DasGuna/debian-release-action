@@ -7,8 +7,7 @@ echo "Checking current directory content"
 ls -la
 echo "Current architecture check"
 uname -m
-echo "Creating a test file for output in something folder"
-mkdir test_targets
+echo "Creating a test file for output in mounted test_targets folder"
 cd test_targets
 touch test.txt
 pwd
