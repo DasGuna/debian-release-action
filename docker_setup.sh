@@ -16,7 +16,7 @@ echo "Running Docker Container for Release..."
 # # # docker cp test-container:/usr/src/my-workdir/my-outputs .
 
 docker build -f ./arm64_Dockerfile -t arm64_ros_container:latest .
-docker run -d -v targets:/test_targets arm64_ros_container:latest
+docker run -v targets:/test_targets arm64_ros_container:latest
 
 echo "Container Completed Functions"
 echo "Path and Contents at this point"

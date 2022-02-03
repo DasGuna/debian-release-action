@@ -11,5 +11,6 @@ echo "Creating a test file for output in something folder"
 mkdir test_targets
 cd test_targets
 touch test.txt
+pwd
 # echo "Checking ROS install path"
 # ls -la /opt/ros/
