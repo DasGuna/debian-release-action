@@ -3,21 +3,11 @@
 set -e
 
 echo "Setting up and Running Container..."
-echo "Path and Contents at this point"
-pwd
-ls -la
-echo "Contents of this action"
-ls $ACTION_PATH
-
-# Reference release entrypoint path
-entrypoint_path=$ACTION_PATH/release.sh
-
-echo "Make a mount point for workspace (add test text file)"
+echo "Make a mount point for workspace (if not available)"
 if [ ! -d ws ]; then
   mkdir -p ws;
 fi
 mount_point_path=$(realpath ws/)
-touch $mount_point_path/this_is_a_test.txt
 
 echo "Copy the action entrypoint into the mounted folder"
 cp $ACTION_PATH/release.sh $mount_point_path/release.sh
@@ -44,9 +34,6 @@ else
 fi
 
 echo "Container Completed Builds Successfully"
-echo "Path and Contents at this point"
-pwd
-ls -la
 echo "Enter Mount Point to Get debs..."
 cd $mount_point_path/release-tools-ros/target
 # Check for debs
