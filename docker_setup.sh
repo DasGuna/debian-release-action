@@ -10,6 +10,6 @@ ls -la
 
 docker build -f ./arm64_Dockerfile -t arm64_ros_container:latest .
 docker run arm64_ros_container:latest
-docker cp arm64_ros_container:./test.txt .
+docker cp arm64_ros_container:test.txt .
 
 echo "Container Completed Functions"
