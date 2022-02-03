@@ -1,3 +1,5 @@
+#!/bin/bash
+
 set -e
 
 echo "Setting up and Running Container..."

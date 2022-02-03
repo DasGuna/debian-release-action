@@ -9,6 +9,8 @@ jobs:
     name: Self Test of Action
     steps:
       - uses: actions/checkout@v2
+      - name: Setup QEMU dependency
+        uses: docker/setup-qemu-action@v1
       - id: test
         uses: DasGuna/test-release-composite-action@main
         with:
