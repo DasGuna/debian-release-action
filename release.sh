@@ -1,3 +1,5 @@
+#!/bin/bash
+
 echo "Running Release Pipeline..."
 echo "Checking current directory path"
 pwd
