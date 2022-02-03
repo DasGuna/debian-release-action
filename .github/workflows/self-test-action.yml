@@ -6,6 +6,11 @@ on: [push]
 jobs:
   self-test-action:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - arch: 'arm64'
+          - arch: 'amd64'
     name: Self Test of Action
     steps:
       - uses: actions/checkout@v2
@@ -14,7 +19,6 @@ jobs:
       - id: test
         uses: DasGuna/test-release-composite-action@main
         with:
-          ros-distro: 'noetic'
-          architecture: 'arm64v8'
+          architecture: ${{ matrix.arch }}
       - run: echo random-number ${{ steps.test.outputs.random-number }}
         shell: bash
