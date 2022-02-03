@@ -21,7 +21,7 @@ echo "Running Docker Container for Release..."
 if [[ $INPUT_ARCH == 'amd64' ]]
 then
     echo "AMD 64 RELEASE Confirmed"
-    docker build -f $ACTION_PATH/amd64_Dockerfile -t amd64_ros_container:latest .
+    docker build --buid-arg action_path=$ACTION_PATH -f $ACTION_PATH/amd64_Dockerfile -t amd64_ros_container:latest .
     docker run -v $mount_point_path:/package_path amd64_ros_container:latest
 elif [[ $INPUT_ARCH == 'arm64' ]]
 then 
