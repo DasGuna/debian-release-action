@@ -23,6 +23,3 @@ jobs:
           architecture: ${{ matrix.arch }}
       - run: echo random-number ${{ steps.test.outputs.random-number }}
         shell: bash
-      # Use output from action 
-      - name: Get Action Output
-        run: echo "created files: ${{ steps.test.outputs.debian-files }}"
