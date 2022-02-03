@@ -10,6 +10,6 @@ uname -m
 echo "Creating a test file for output in mounted test_targets folder"
 cd test_targets
 touch test.txt
-pwd
+ls -la
 # echo "Checking ROS install path"
 # ls -la /opt/ros/

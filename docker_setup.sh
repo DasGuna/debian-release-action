@@ -6,10 +6,6 @@ echo "Setting up and Running Container..."
 echo "Path and Contents at this point"
 pwd
 ls -la
-echo "Make a mount point for files"
-mkdir targets
-echo "ls path"
-ls $GITHUB_PATH
 echo "Running Docker Container for Release..."
 # docker build -f ./amd64_Dockerfile -t amd64_ros_container:latest .
 # docker run amd64_ros_container:latest
@@ -23,4 +19,5 @@ echo "Path and Contents at this point"
 pwd
 ls -la
 echo "Files in mount point"
-ls targets
+cd targets
+ls -la
