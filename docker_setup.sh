@@ -27,17 +27,17 @@ if [[ $INPUT_ARCH == 'amd64' ]]
 then
     echo "AMD 64 RELEASE Confirmed"
     docker build -f $ACTION_PATH/amd64_Dockerfile -t amd64_ros_container:latest .
-    docker run -v $mount_point_path:/package_path amd64_ros_container:latest
+    docker run -v $mount_point_path:/docker_ws amd64_ros_container:latest
 elif [[ $INPUT_ARCH == 'arm64' ]]
 then 
     echo "ARM 64 RELEASE Confirmed"
     docker build -f $ACTION_PATH/arm64_Dockerfile -t arm64_ros_container:latest .
-    docker run -v $mount_point_path:/package_path arm64_ros_container:latest
+    docker run -v $mount_point_path:/docker_ws arm64_ros_container:latest
 elif [[ $INPUT_ARCH == 'arm32' ]]
 then 
     echo "ARM 32 RELEASE Confirmed"
     docker build -f $ACTION_PATH/arm32_Dockerfile -t arm32_ros_container:latest .
-    docker run -v $mount_point_path:/package_path arm32_ros_container:latest
+    docker run -v $mount_point_path:/docker_ws arm32_ros_container:latest
 else
     echo "UNKNOWN ARCH"
     exit -1
@@ -48,4 +48,4 @@ echo "Path and Contents at this point"
 pwd
 ls -la
 echo "Files in mount point"
-ls -la $mount_point_path
+ls -la $mount_point_path/release-tools-ros/target

@@ -2,4 +2,4 @@
 FROM amd64/ros:noetic
 
 # Code file to execute when the docker container starts up (`entrypoint.sh`)
-ENTRYPOINT ["/package_path/release.sh"]
+ENTRYPOINT ["/docker_ws/release.sh"]
