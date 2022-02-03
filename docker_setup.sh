@@ -12,9 +12,11 @@ ls $ACTION_PATH
 # Reference release entrypoint path
 entrypoint_path=$ACTION_PATH/release.sh
 
-echo "Make a mount point for package (add test text file)"
-mkdir package
-mount_point_path=$(realpath package/)
+echo "Make a mount point for workspace (add test text file)"
+if [ ! -d ws ]; then
+  mkdir -p ws;
+fi
+mount_point_path=$(realpath ws/)
 touch $mount_point_path/this_is_a_test.txt
 
 echo "Copy the action entrypoint into the mounted folder"
