@@ -23,5 +23,6 @@ runs:
     - run: docker_setup.sh
       shell: bash
       env:
+        ACTION_PATH: ${{ github.action_path }}
         INPUT_ROS_DISTRO: ${{ inputs.ros-distro }}
         INPUT_ARCH: ${{ inputs.architecture }}

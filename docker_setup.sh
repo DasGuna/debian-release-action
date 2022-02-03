@@ -6,6 +6,8 @@ echo "Setting up and Running Container..."
 echo "Path and Contents at this point"
 pwd
 ls -la
+echo "Contents of this action"
+ls $ACTION_PATH
 
 # Reference release entrypoint path
 entrypoint_path=$(realpath release.sh)
