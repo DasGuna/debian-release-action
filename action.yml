@@ -18,12 +18,15 @@ outputs:
 runs:
   using: "composite"
   steps:
-    - run: echo Hello World
-      shell: bash
-    - id: random-number-generator
-      run: echo "::set-output name=random-id::$(echo $RANDOM)"
-      shell: bash
+    # - run: echo Hello World
+    #   shell: bash
+    # - id: random-number-generator
+    #   run: echo "::set-output name=random-id::$(echo $RANDOM)"
+    #   shell: bash
     - run: echo "${{ github.action_path }}" >> $GITHUB_PATH
       shell: bash
     - run: docker_setup.sh
       shell: bash
+      env:
+        INPUT_ROS_DISTRO: ${{ inputs.ros-distro }}
+        INPUT_ARCH: ${{ inputs.architecture }}

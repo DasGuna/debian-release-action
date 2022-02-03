@@ -16,7 +16,5 @@ jobs:
         with:
           ros-distro: 'noetic'
           architecture: 'arm64v8'
-        env:
-          FROM: 'amd64/ros:noetic'
       - run: echo random-number ${{ steps.test.outputs.random-number }}
         shell: bash
