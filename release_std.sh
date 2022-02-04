@@ -1,8 +1,6 @@
 #!/usr/bin/bash
 
 echo "Running Release Pipeline..."
-echo "Sanity check current architecture"
-uname -m
 
 # Install Required dependencies
 echo "Getting Required Libraries..."

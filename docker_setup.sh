@@ -21,30 +21,32 @@ ls -la $ACTION_PATH
 if [[ $INPUT_ARCH == 'arm32' ]]
 then
     echo "Copy the action entrypoint into the mounted folder"
-    cp $ACTION_PATH/release_std.sh $mount_point_path/release_std.sh
+    cp $ACTION_PATH/release_std.sh $mount_point_path/release.sh
     echo "Copy the pre-built dependencies (i.e., cmake-3.20 version) for installation in container"
     rsync -aPv $ACTION_PATH/dependencies $mount_point_path
 else
     echo "Copy the action entrypoint into the mounted folder"
-    cp $ACTION_PATH/release_armhf.sh $mount_point_path/release_armhf.sh
+    cp $ACTION_PATH/release_armhf.sh $mount_point_path/release.sh
 fi
+
+ls -la $mount_point_path
 
 echo "Running Docker Container for Release..."
 if [[ $INPUT_ARCH == 'amd64' ]]
 then
     echo "AMD 64 RELEASE Confirmed"
     # Run standard release workflow
-    docker run -v $mount_point_path:/docker_ws --rm -t amd64/ros:noetic docker_ws/release_std.sh
+    docker run -v $mount_point_path:/docker_ws --rm -t amd64/ros:noetic docker_ws/release.sh
 elif [[ $INPUT_ARCH == 'arm64' ]]
 then 
     echo "ARM 64 RELEASE Confirmed"
     # Run standard release workflow
-    docker run -v $mount_point_path:/docker_ws --rm -t arm64v8/ros:noetic docker_ws/release_std.sh
+    docker run -v $mount_point_path:/docker_ws --rm -t arm64v8/ros:noetic docker_ws/release.sh
 elif [[ $INPUT_ARCH == 'arm32' ]]
 then 
     echo "ARM 32 RELEASE Confirmed"
     # Run updated release workflow for installing pre-built cmake-3.20 in armhf images
-    docker run -v $mount_point_path:/docker_ws --rm -t arm32v7/ros:noetic docker_ws/release_armhf.sh
+    docker run -v $mount_point_path:/docker_ws --rm -t arm32v7/ros:noetic docker_ws/release.sh
 else
     echo "UNKNOWN ARCH - Exiting Gracefully"
     exit -1
