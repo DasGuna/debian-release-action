@@ -32,25 +32,20 @@ fi
 # Set to default
 IMAGE=amd64
 
+# Select correct image to run 
 echo "Running Docker Container for Release..."
 if [[ $INPUT_ARCH == 'amd64' ]]
 then
     echo "AMD 64 RELEASE Confirmed"
     IMAGE=amd64
-    # Run standard release workflow
-    # docker run -v $mount_point_path:/docker_ws --rm -t amd64/ros:$INPUT_ROS_DISTRO docker_ws/release.sh
 elif [[ $INPUT_ARCH == 'arm64' ]]
 then 
     echo "ARM 64 RELEASE Confirmed"
     IMAGE=arm64v8
-    # Run standard release workflow
-    # docker run -v $mount_point_path:/docker_ws --rm -t arm64v8/ros:$INPUT_ROS_DISTRO docker_ws/release.sh
 elif [[ $INPUT_ARCH == 'arm32' ]]
 then 
     echo "ARM 32 RELEASE Confirmed"
     IMAGE=arm32v7
-    # Run updated release workflow for installing pre-built cmake-3.20 in armhf images
-    # docker run -v $mount_point_path:/docker_ws --rm -t arm32v7/ros:$INPUT_ROS_DISTRO docker_ws/release.sh
 else
     echo "UNKNOWN ARCH - Exiting Gracefully"
     exit -1
