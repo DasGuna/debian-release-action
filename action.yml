@@ -1,5 +1,5 @@
 name: 'Multi-Architecture Release Action'
-description: 'Creates a Debian from a selected architecture'
+description: 'Creates a debian from a selected architecture'
 inputs:
   ros-distro: #id of distro input
     description: 'ROS distro to use'

@@ -29,28 +29,41 @@ else
     cp $ACTION_PATH/release_std.sh $mount_point_path/release.sh
 fi
 
-ls -la $mount_point_path
+# Set to default
+IMAGE=amd64
 
 echo "Running Docker Container for Release..."
 if [[ $INPUT_ARCH == 'amd64' ]]
 then
     echo "AMD 64 RELEASE Confirmed"
+    IMAGE=amd64
     # Run standard release workflow
-    docker run -v $mount_point_path:/docker_ws --rm -t amd64/ros:noetic docker_ws/release.sh
+    # docker run -v $mount_point_path:/docker_ws --rm -t amd64/ros:$INPUT_ROS_DISTRO docker_ws/release.sh
 elif [[ $INPUT_ARCH == 'arm64' ]]
 then 
     echo "ARM 64 RELEASE Confirmed"
+    IMAGE=arm64v8
     # Run standard release workflow
-    docker run -v $mount_point_path:/docker_ws --rm -t arm64v8/ros:noetic docker_ws/release.sh
+    # docker run -v $mount_point_path:/docker_ws --rm -t arm64v8/ros:$INPUT_ROS_DISTRO docker_ws/release.sh
 elif [[ $INPUT_ARCH == 'arm32' ]]
 then 
     echo "ARM 32 RELEASE Confirmed"
+    IMAGE=arm32v7
     # Run updated release workflow for installing pre-built cmake-3.20 in armhf images
-    docker run -v $mount_point_path:/docker_ws --rm -t arm32v7/ros:noetic docker_ws/release.sh
+    # docker run -v $mount_point_path:/docker_ws --rm -t arm32v7/ros:$INPUT_ROS_DISTRO docker_ws/release.sh
 else
     echo "UNKNOWN ARCH - Exiting Gracefully"
     exit -1
 fi
+
+echo "Sanity Check INPUT_ROS_DISTRO: $INPUT_ROS_DISTRO"
+echo "Sanity Check IMAGE: $IMAGE"
+
+# Run container
+docker run \
+    -e INPUT_ROS_DISTRO=$INPUT_ROS_DISTRO \
+    -v $mount_point_path:/docker_ws \
+    --rm -t $IMAGE/ros:$INPUT_ROS_DISTRO docker_ws/release.sh
 
 echo "Container Completed Builds Successfully"
 echo "Enter Mount Point to Get debs..."

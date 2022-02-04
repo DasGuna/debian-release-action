@@ -1,6 +1,7 @@
 #!/usr/bin/bash
 
 echo "Running Release Pipeline..."
+echo "Ros distro is $INPUT_ROS_DISTRO"
 
 # Install Required dependencies
 echo "Getting Required Libraries..."
@@ -20,7 +21,7 @@ cmake --version
 
 # Source the ROS workspace
 echo "Source ROS workspace"
-source /opt/ros/noetic/setup.sh
+source /opt/ros/$INPUT_ROS_DISTRO/setup.sh
 
 echo "Enter docker mounted workspace folder for releasing package(s)"
 cd /docker_ws

@@ -16,6 +16,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - id: test
-        uses: DasGuna/test-release-composite-action@main
+        uses: DasGuna/debian-release-action@main
         with:
           architecture: ${{ matrix.arch }}
