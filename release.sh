@@ -9,11 +9,18 @@ ln -s /usr/bin/python3 /usr/local/bin/python
 
 # This has already been build so install only (faster implementation)
 echo "Uncompressing and Installing Pre-Built cmake 3.20 Version for Release [Required for armhf]"
+echo "Checking contents of docker_ws"
+ls -la /docker_ws
+echo "Checking dependencies folder"
+ls -la /docker_ws/dependencies
 tar -xf /docker_ws/dependencies/cmake-3.20-pre-built.tar.gz
-cd /docker_ws/dependencies/cmake-3.20
+echo "Checking root folder for new cmake-3.20"
+ls -la 
+cd /cmake-3.20
 make install
 echo "Sanity check of cmake version:"
 cmake --version
+exit 0
 
 # Source the ROS workspace
 echo "Source ROS workspace"

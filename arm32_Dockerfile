@@ -1,5 +1,0 @@
-# Bring in ROS (Official) container
-FROM arm32v7/ros:noetic
-
-# Code file to execute when the docker container starts up (`entrypoint.sh`)
-ENTRYPOINT ["/docker_ws/release.sh"]
