@@ -16,11 +16,10 @@ echo "Copy the action entrypoint into the mounted folder"
 cp $ACTION_PATH/release.sh $mount_point_path/release.sh
 echo "Copy the pre-built dependencies (i.e., cmake-3.20 version) for installation in container"
 rsync -aPv $ACTION_PATH/dependencies $mount_point_path
+echo "Sanity check in mount path:"
+ls -la $mount_point_path
+echo "Sanity check within dependencies:"
 ls -la $mount_point_path/dependencies
-exit 1
-
-# echo "Setting up QEMU [Working for amd64 and arm64]"
-# docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
 
 echo "Running Docker Container for Release..."
 if [[ $INPUT_ARCH == 'amd64' ]]
