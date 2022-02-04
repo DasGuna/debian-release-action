@@ -14,23 +14,34 @@ mount_point_path=$(realpath ws/)
 
 echo "Copy the action entrypoint into the mounted folder"
 cp $ACTION_PATH/release.sh $mount_point_path/release.sh
+echo "Copy the pre-built dependencies (i.e., cmake-3.20 version) for installation in container"
+rsync -aPv $ACTION_PATH/dependencies $mount_point_path/dependencies
+
+# echo "Setting up QEMU [Working for amd64 and arm64]"
+# docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
 
 echo "Running Docker Container for Release..."
 if [[ $INPUT_ARCH == 'amd64' ]]
 then
     echo "AMD 64 RELEASE Confirmed"
-    docker build -f $ACTION_PATH/amd64_Dockerfile -t amd64_ros_container:latest .
-    docker run -v $mount_point_path:/docker_ws amd64_ros_container:latest
+    # docker build -f $ACTION_PATH/amd64_Dockerfile -t amd64_ros_container:latest .
+    # docker run -v $mount_point_path:/docker_ws amd64_ros_container:latest
+
+    docker run -v $mount_point_path:/docker_ws --rm -t amd64/ros:noetic docker_ws/release.sh
 elif [[ $INPUT_ARCH == 'arm64' ]]
 then 
     echo "ARM 64 RELEASE Confirmed"
-    docker build -f $ACTION_PATH/arm64_Dockerfile -t arm64_ros_container:latest .
-    docker run -v $mount_point_path:/docker_ws arm64_ros_container:latest
+    # docker build -f $ACTION_PATH/arm64_Dockerfile -t arm64_ros_container:latest .
+    # docker run -v $mount_point_path:/docker_ws arm64_ros_container:latest
+
+    docker run -v $mount_point_path:/docker_ws --rm -t arm64v8/ros:noetic docker_ws/release.sh
 elif [[ $INPUT_ARCH == 'arm32' ]]
 then 
     echo "ARM 32 RELEASE Confirmed"
-    docker build -f $ACTION_PATH/arm32_Dockerfile -t arm32_ros_container:latest .
-    docker run -v $mount_point_path:/docker_ws arm32_ros_container:latest
+    # docker build -f $ACTION_PATH/arm32_Dockerfile -t arm32_ros_container:latest .
+    # docker run -v $mount_point_path:/docker_ws arm32_ros_container:latest
+
+    docker run -v $mount_point_path:/docker_ws --rm -t arm32v7/ros:noetic docker_ws/release.sh
 else
     echo "UNKNOWN ARCH - Exiting Gracefully"
     exit -1

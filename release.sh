@@ -2,23 +2,32 @@
 
 echo "Running Release Pipeline..."
 echo "Getting Required Libraries..."
-apt-get -y update 
-apt-get install -y python3-pip python3-dev python3-bloom python3-stdeb dh-make git wget fakeroot python3-catkin-pkg
+apt -y update 
+apt install -y python3-pip python3-dev python3-bloom python3-stdeb dh-make git wget fakeroot
+# Symbolic link python command to python3 (default behaviour)
 ln -s /usr/bin/python3 /usr/local/bin/python
 
+# This has already been build so install only (faster implementation)
+echo "Uncompressing and Installing Pre-Built cmake 3.20 Version for Release [Required for armhf]"
+tar -xf /docker_ws/dependencies/cmake-3.20-pre-built.tar.gz
+cd /docker_ws/dependencies/cmake-3.20
+make install
+echo "Sanity check of cmake version:"
+cmake --version
+
+# Source the ROS workspace
 echo "Source ROS workspace"
-source /opt/ros/noetic/setup.bash
+source /opt/ros/noetic/setup.sh
 
 echo "Checking current directory path"
 pwd
 echo "Checking current directory content"
 ls -la
-echo "Current architecture check"
+echo "Sanity check current architecture"
 uname -m
-echo "Enter docker ws folder for releasing package(s)"
-cd docker_ws
+echo "Enter docker mounted workspace folder for releasing package(s)"
+cd /docker_ws
 ls -la
-
 echo "Clone release tools action from QCR repos"
 git clone https://github.com/qcr/release-tools-ros.git
 cd release-tools-ros
