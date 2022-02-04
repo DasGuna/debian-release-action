@@ -12,6 +12,8 @@ if [ ! -d ws ]; then
 fi
 mount_point_path=$(realpath ws/)
 
+ls -la $ACTION_PATH
+
 # Only copy dependencies for arm32/armhf
 # Bug in cmake that needs cmake-3.20 and greater AND an update to the bootstrap script (missing in standard cmake-3.20)
 # This is why a pre-built cmake-3.20 is included for specifically building armhf debs successfully
