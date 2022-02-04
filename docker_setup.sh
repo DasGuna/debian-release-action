@@ -12,16 +12,19 @@ if [ ! -d ws ]; then
 fi
 mount_point_path=$(realpath ws/)
 
-echo "Copy the action entrypoint into the mounted folder"
-cp $ACTION_PATH/release.sh $mount_point_path/release.sh
-
 # Only copy dependencies for arm32/armhf
 # Bug in cmake that needs cmake-3.20 and greater AND an update to the bootstrap script (missing in standard cmake-3.20)
 # This is why a pre-built cmake-3.20 is included for specifically building armhf debs successfully
+# Also copy across action release workflow (specific if required) to required mount point
 if [[ $INPUT_ARCH == 'arm32' ]]
 then
+    echo "Copy the action entrypoint into the mounted folder"
+    cp $ACTION_PATH/release_std.sh $mount_point_path/release_std.sh
     echo "Copy the pre-built dependencies (i.e., cmake-3.20 version) for installation in container"
     rsync -aPv $ACTION_PATH/dependencies $mount_point_path
+else
+    echo "Copy the action entrypoint into the mounted folder"
+    cp $ACTION_PATH/release_armhf.sh $mount_point_path/release_armhf.sh
 fi
 
 echo "Running Docker Container for Release..."
