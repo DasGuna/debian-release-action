@@ -2,9 +2,6 @@
 
 set -e
 
-# echo "Installing some dependencies..."
-# sudo apt install qemu-user-static
-
 echo "Setting up and Running Container..."
 echo "Make a mount point for workspace (if not available)"
 if [ ! -d ws ]; then
