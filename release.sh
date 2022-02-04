@@ -16,7 +16,9 @@ ls -la /docker_ws/dependencies
 tar -xf /docker_ws/dependencies/cmake-3.20-pre-built.tar.gz
 echo "Checking root folder for new cmake-3.20"
 ls -la 
-cd /cmake-3.20
+cd cmake-3.20
+echo "Checking current contents of folder"
+ls -la 
 make install
 echo "Sanity check of cmake version:"
 cmake --version
