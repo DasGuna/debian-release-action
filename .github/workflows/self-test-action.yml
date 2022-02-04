@@ -9,8 +9,8 @@ jobs:
     strategy:
       matrix:
         include:
-          # - arch: 'amd64'
-          # - arch: 'arm64'
+          - arch: 'amd64'
+          - arch: 'arm64'
           - arch: 'arm32'
     name: Self Test of Action
     steps:

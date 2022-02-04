@@ -14,35 +14,32 @@ mount_point_path=$(realpath ws/)
 
 echo "Copy the action entrypoint into the mounted folder"
 cp $ACTION_PATH/release.sh $mount_point_path/release.sh
-echo "Copy the pre-built dependencies (i.e., cmake-3.20 version) for installation in container"
-rsync -aPv $ACTION_PATH/dependencies $mount_point_path
-echo "Sanity check in mount path:"
-ls -la $mount_point_path
-echo "Sanity check within dependencies:"
-ls -la $mount_point_path/dependencies
+
+# Only copy dependencies for arm32/armhf
+# Bug in cmake that needs cmake-3.20 and greater AND an update to the bootstrap script (missing in standard cmake-3.20)
+# This is why a pre-built cmake-3.20 is included for specifically building armhf debs successfully
+if [[ $INPUT_ARCH == 'arm32' ]]
+then
+    echo "Copy the pre-built dependencies (i.e., cmake-3.20 version) for installation in container"
+    rsync -aPv $ACTION_PATH/dependencies $mount_point_path
+fi
 
 echo "Running Docker Container for Release..."
 if [[ $INPUT_ARCH == 'amd64' ]]
 then
     echo "AMD 64 RELEASE Confirmed"
-    # docker build -f $ACTION_PATH/amd64_Dockerfile -t amd64_ros_container:latest .
-    # docker run -v $mount_point_path:/docker_ws amd64_ros_container:latest
-
-    docker run -v $mount_point_path:/docker_ws --rm -t amd64/ros:noetic docker_ws/release.sh
+    # Run standard release workflow
+    docker run -v $mount_point_path:/docker_ws --rm -t amd64/ros:noetic docker_ws/release_std.sh
 elif [[ $INPUT_ARCH == 'arm64' ]]
 then 
     echo "ARM 64 RELEASE Confirmed"
-    # docker build -f $ACTION_PATH/arm64_Dockerfile -t arm64_ros_container:latest .
-    # docker run -v $mount_point_path:/docker_ws arm64_ros_container:latest
-
-    docker run -v $mount_point_path:/docker_ws --rm -t arm64v8/ros:noetic docker_ws/release.sh
+    # Run standard release workflow
+    docker run -v $mount_point_path:/docker_ws --rm -t arm64v8/ros:noetic docker_ws/release_std.sh
 elif [[ $INPUT_ARCH == 'arm32' ]]
 then 
     echo "ARM 32 RELEASE Confirmed"
-    # docker build -f $ACTION_PATH/arm32_Dockerfile -t arm32_ros_container:latest .
-    # docker run -v $mount_point_path:/docker_ws arm32_ros_container:latest
-
-    docker run -v $mount_point_path:/docker_ws --rm -t arm32v7/ros:noetic docker_ws/release.sh
+    # Run updated release workflow for installing pre-built cmake-3.20 in armhf images
+    docker run -v $mount_point_path:/docker_ws --rm -t arm32v7/ros:noetic docker_ws/release_armhf.sh
 else
     echo "UNKNOWN ARCH - Exiting Gracefully"
     exit -1
