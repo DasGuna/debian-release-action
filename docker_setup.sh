@@ -21,12 +21,12 @@ ls -la $ACTION_PATH
 if [[ $INPUT_ARCH == 'arm32' ]]
 then
     echo "Copy the action entrypoint into the mounted folder"
-    cp $ACTION_PATH/release_std.sh $mount_point_path/release.sh
+    cp $ACTION_PATH/release_armhf.sh $mount_point_path/release.sh
     echo "Copy the pre-built dependencies (i.e., cmake-3.20 version) for installation in container"
     rsync -aPv $ACTION_PATH/dependencies $mount_point_path
 else
     echo "Copy the action entrypoint into the mounted folder"
-    cp $ACTION_PATH/release_armhf.sh $mount_point_path/release.sh
+    cp $ACTION_PATH/release_std.sh $mount_point_path/release.sh
 fi
 
 ls -la $mount_point_path
